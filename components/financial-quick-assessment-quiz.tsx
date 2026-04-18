@@ -24,6 +24,8 @@ export function FinancialQuickAssessmentQuiz() {
   const [answers, setAnswers] = useState<Partial<AnswersState>>({});
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const totalQuestions = financialQuickAssessmentQuestions.length;
   const currentQuestion = financialQuickAssessmentQuestions[currentIndex];
@@ -42,21 +44,70 @@ export function FinancialQuickAssessmentQuiz() {
     }));
   }
 
-  function handleNext() {
+  async function handleSubmit() {
+    try {
+      setIsSubmitting(true);
+      setSubmitError("");
+
+      const score = financialQuickAssessmentQuestions.reduce((total, question) => {
+        return total + (answers[question.id] === 1 ? 1 : 0);
+      }, 0);
+
+      let result = "Time for a Reset";
+      let nextStep = "Register for the Webinar";
+
+      if (score >= 8) {
+        result = "Strong & Steady";
+        nextStep = "Book a Budget Planning Review";
+      } else if (score >= 5) {
+        result = "Progress in Motion";
+        nextStep = "Book a Private Coaching Orientation";
+      }
+
+      const normalizedAnswers: Record<number, AnswerValue> = {};
+
+      for (const question of financialQuickAssessmentQuestions) {
+        normalizedAnswers[question.id] = answers[question.id] === 1 ? 1 : 0;
+      }
+
+      const response = await fetch("/api/quiz/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          score,
+          result,
+          nextStep,
+          answers: normalizedAnswers,
+          consent,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit quiz");
+      }
+
+      router.push(`/results?score=${score}`);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Failed to submit quiz",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  async function handleNext() {
     if (!canGoNext) {
       return;
     }
 
     if (isLastQuestion) {
-      const score = financialQuickAssessmentQuestions.reduce((total, question) => {
-        return total + (answers[question.id] === 1 ? 1 : 0);
-      }, 0);
-
-      const query = new URLSearchParams({
-        score: String(score),
-      });
-
-      router.push(`/results?${query.toString()}`);
+      await handleSubmit();
       return;
     }
 
@@ -64,7 +115,7 @@ export function FinancialQuickAssessmentQuiz() {
   }
 
   function handleBack() {
-    if (!canGoBack) {
+    if (!canGoBack || isSubmitting) {
       return;
     }
 
@@ -231,15 +282,20 @@ export function FinancialQuickAssessmentQuiz() {
                     className="rounded-[1.5rem] border px-6 py-8 text-left transition"
                     style={{
                       borderColor:
-                        currentAnswer === 1 ? efcBrand.colors.moneyGreen : efcBrand.colors.border,
-                      backgroundColor: currentAnswer === 1 ? "#edf7f2" : efcBrand.colors.surface,
+                        currentAnswer === 1
+                          ? efcBrand.colors.moneyGreen
+                          : efcBrand.colors.border,
+                      backgroundColor:
+                        currentAnswer === 1 ? "#edf7f2" : efcBrand.colors.surface,
                     }}
                   >
                     <div
                       className="text-sm uppercase tracking-[0.2em]"
                       style={{
                         color:
-                          currentAnswer === 1 ? efcBrand.colors.moneyGreen : efcBrand.colors.mutedInk,
+                          currentAnswer === 1
+                            ? efcBrand.colors.moneyGreen
+                            : efcBrand.colors.mutedInk,
                       }}
                     >
                       Answer
@@ -264,15 +320,20 @@ export function FinancialQuickAssessmentQuiz() {
                     className="rounded-[1.5rem] border px-6 py-8 text-left transition"
                     style={{
                       borderColor:
-                        currentAnswer === 0 ? efcBrand.colors.orange : efcBrand.colors.border,
-                      backgroundColor: currentAnswer === 0 ? "#fff1ed" : efcBrand.colors.surface,
+                        currentAnswer === 0
+                          ? efcBrand.colors.orange
+                          : efcBrand.colors.border,
+                      backgroundColor:
+                        currentAnswer === 0 ? "#fff1ed" : efcBrand.colors.surface,
                     }}
                   >
                     <div
                       className="text-sm uppercase tracking-[0.2em]"
                       style={{
                         color:
-                          currentAnswer === 0 ? efcBrand.colors.orange : efcBrand.colors.mutedInk,
+                          currentAnswer === 0
+                            ? efcBrand.colors.orange
+                            : efcBrand.colors.mutedInk,
                       }}
                     >
                       Answer
@@ -292,11 +353,17 @@ export function FinancialQuickAssessmentQuiz() {
                   </button>
                 </div>
 
+                {submitError ? (
+                  <p className="mt-6 text-sm" style={{ color: efcBrand.colors.orange }}>
+                    {submitError}
+                  </p>
+                ) : null}
+
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-between">
                   <button
                     type="button"
                     onClick={handleBack}
-                    disabled={!canGoBack}
+                    disabled={!canGoBack || isSubmitting}
                     className="inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
                     style={{
                       borderColor: efcBrand.colors.border,
@@ -310,13 +377,17 @@ export function FinancialQuickAssessmentQuiz() {
                   <button
                     type="button"
                     onClick={handleNext}
-                    disabled={!canGoNext || !email.trim() || !consent}
+                    disabled={!canGoNext || !email.trim() || !consent || isSubmitting}
                     className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
                     style={{
                       backgroundColor: efcBrand.colors.teal,
                     }}
                   >
-                    {isLastQuestion ? "See My Results" : "Next Question"}
+                    {isSubmitting
+                      ? "Submitting..."
+                      : isLastQuestion
+                        ? "See My Results"
+                        : "Next Question"}
                   </button>
                 </div>
               </article>
