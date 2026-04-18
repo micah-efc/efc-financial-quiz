@@ -268,17 +268,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    const baseUrl = process.env.ACTIVECAMPAIGN_BASE_URL;
-    const apiKey = process.env.ACTIVECAMPAIGN_API_KEY;
+    const supabaseUrl = process.env.SUPABASE_URL?.trim();
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+    const baseUrl = process.env.ACTIVECAMPAIGN_BASE_URL?.trim();
+    const apiKey = process.env.ACTIVECAMPAIGN_API_KEY?.trim();
 
-    if (!baseUrl || !apiKey) {
+    const missingActiveCampaignVars: string[] = [];
+
+    if (!baseUrl) {
+      missingActiveCampaignVars.push("ACTIVECAMPAIGN_BASE_URL");
+    }
+
+    if (!apiKey) {
+      missingActiveCampaignVars.push("ACTIVECAMPAIGN_API_KEY");
+    }
+
+    if (missingActiveCampaignVars.length > 0) {
+      console.error("ActiveCampaign configuration missing", {
+        missing: missingActiveCampaignVars,
+      });
+
       return NextResponse.json(
-        { error: "ActiveCampaign configuration missing" },
+        {
+          error: `ActiveCampaign configuration missing: ${missingActiveCampaignVars.join(", ")}`,
+        },
         { status: 500 },
       );
     }
+
+    const activeCampaignBaseUrl = baseUrl!;
+    const activeCampaignApiKey = apiKey!;
 
     const resultKey = getResultKey(result);
 
@@ -336,55 +355,55 @@ export async function POST(request: NextRequest) {
     }
 
     const contactId = await getOrCreateActiveCampaignContact(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       email,
     );
 
     console.log("ActiveCampaign contact ready", { contactId, email });
 
     await writeActiveCampaignFieldValue(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       contactId,
       process.env.ACTIVECAMPAIGN_FIELD_QUIZ_SCORE,
       String(score),
     );
 
     await writeActiveCampaignFieldValue(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       contactId,
       process.env.ACTIVECAMPAIGN_FIELD_QUIZ_RESULT,
       result,
     );
 
     await writeActiveCampaignFieldValue(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       contactId,
       process.env.ACTIVECAMPAIGN_FIELD_QUIZ_SELECTED_NEXT_STEP,
       nextStep || undefined,
     );
 
     await writeActiveCampaignFieldValue(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       contactId,
       process.env.ACTIVECAMPAIGN_FIELD_QUIZ_DATE,
       new Date().toISOString().split("T")[0],
     );
 
     await applyActiveCampaignTag(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       contactId,
       getTagIdForResult(result),
     );
 
     await subscribeContactToActiveCampaignList(
-      baseUrl,
-      apiKey,
+      activeCampaignBaseUrl,
+      activeCampaignApiKey,
       contactId,
     );
 
