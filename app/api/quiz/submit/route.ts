@@ -25,6 +25,7 @@ function getResultKey(result: string): string {
       return "strong_steady";
     case "Progress in Motion":
       return "progress_in_motion";
+    case "Time for Reset":
     case "Time for a Reset":
       return "time_for_reset";
     default:
@@ -38,6 +39,7 @@ function getTagIdForResult(result: string): string | undefined {
       return process.env.ACTIVECAMPAIGN_TAG_STRONG_STEADY;
     case "Progress in Motion":
       return process.env.ACTIVECAMPAIGN_TAG_PROGRESS_IN_MOTION;
+    case "Time for Reset":
     case "Time for a Reset":
       return process.env.ACTIVECAMPAIGN_TAG_TIME_FOR_RESET;
     default:
@@ -271,13 +273,6 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.ACTIVECAMPAIGN_BASE_URL;
     const apiKey = process.env.ACTIVECAMPAIGN_API_KEY;
 
-    if (!supabaseUrl || !supabaseKey) {
-      return NextResponse.json(
-        { error: "Supabase configuration missing" },
-        { status: 500 },
-      );
-    }
-
     if (!baseUrl || !apiKey) {
       return NextResponse.json(
         { error: "ActiveCampaign configuration missing" },
@@ -285,48 +280,58 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
-    });
-
     const resultKey = getResultKey(result);
 
-    console.log("Saving submission to Supabase", {
-      email,
-      score,
-      result,
-      nextStep,
-      answers,
-      consent,
-      resultKey,
-    });
+    let submissionId: string | number | null = null;
 
-    const { data: submission, error: supabaseError } = await supabase
-      .from("quiz_submissions")
-      .insert({
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createClient(supabaseUrl, supabaseKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+        },
+      });
+
+      console.log("Saving submission to Supabase", {
         email,
-        answers,
         score,
-        result_key: resultKey,
-        result_title: result,
-        selected_next_step: nextStep || null,
-        consent_marketing: consent,
-      })
-      .select("id")
-      .single();
+        result,
+        nextStep,
+        answers,
+        consent,
+        resultKey,
+      });
 
-    console.log("Supabase insert result", {
-      submission,
-      supabaseError,
-    });
+      const { data: submission, error: supabaseError } = await supabase
+        .from("quiz_submissions")
+        .insert({
+          email,
+          answers,
+          score,
+          result_key: resultKey,
+          result_title: result,
+          selected_next_step: nextStep || null,
+          consent_marketing: consent,
+        })
+        .select("id")
+        .single();
 
-    if (supabaseError) {
-      return NextResponse.json(
-        { error: supabaseError.message },
-        { status: 500 },
+      console.log("Supabase insert result", {
+        submission,
+        supabaseError,
+      });
+
+      if (supabaseError) {
+        return NextResponse.json(
+          { error: supabaseError.message },
+          { status: 500 },
+        );
+      }
+
+      submissionId = submission.id;
+    } else {
+      console.warn(
+        "Supabase configuration missing; skipping database persistence and continuing with ActiveCampaign",
       );
     }
 
@@ -385,7 +390,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      submissionId: submission.id,
+      submissionId,
       contactId,
     });
   } catch (error) {
