@@ -81,31 +81,41 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
     message:
       "You’ve built a solid financial foundation! Your habits show awareness, planning, and care.",
     recommendation:
-      "If you’re preparing for a life transition or want to fine-tune your plan, we recommend a Budget Planning Review or a quick check-in coaching session to stay ahead.\n\nWant to help someone else grow too? Forward this quiz or invite a friend to take it!",
+      "If you’re preparing for a life transition or want to fine-tune your plan, we recommend a quick check-in coaching session to stay ahead. Click learn more to schedule a get to know you session.\n\nWant to help someone else grow too? Forward this quiz or invite a friend to take it!",
     closing: financialQuickAssessmentClosing,
     primaryCta: {
-      label: "Book a Budget Planning Review",
-      href: "https://calendly.com/mr_efc/budget-check-orientation",
+      label: "Monthly Webinar",
+      href: "https://empoweringfinancialcoaching.com/workshops/",
     },
     secondaryCta: {
-      label: "Schedule a Learn More Session",
+      label: "Schedule Session to Learn More",
       href: "https://calendly.com/mr_efc/learn-more",
     },
     nextStepLinks: [
       {
-        label: "Schedule a Planning Review",
-        href: "https://calendly.com/mr_efc/budget-check-orientation",
-        description: "Fine-tune your current plan and stay ahead of upcoming changes.",
-      },
-      {
-        label: "Register for the Webinar",
-        href: "https://empoweringfinancialcoaching.com/workshops/",
-        description: "Join the monthly workshop for continued growth and accountability.",
-      },
-      {
-        label: "Explore Coaching Services",
+        label: "Coaching",
         href: "https://empoweringfinancialcoaching.com/coaching/",
-        description: "See which support option fits your current season best.",
+        description: "Explore one-on-one and group coaching options.",
+      },
+      {
+        label: "Summit",
+        href: "https://empoweringfinancialcoaching.com/summit/",
+        description: "Join our annual summit for deep-dive learning and community.",
+      },
+      {
+        label: "Webinars",
+        href: "https://empoweringfinancialcoaching.com/workshops/",
+        description: "Participate in our monthly webinars for hands-on guidance and support.",
+      },
+      {
+        label: "Contact",
+        href: "https://empoweringfinancialcoaching.com/contact/",
+        description: "Reach out with questions or to get personalized support.",
+      },
+      {
+        label: "Schedule Session to Learn More",
+        href: "https://calendly.com/mr_efc/learn-more",
+        description: "Book a FREE 30-minute session to discuss your goals and next steps.",
       },
     ],
   },
@@ -118,31 +128,41 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
     message:
       "You’re on your way! You’ve got good habits in place, and with a little extra focus in one or two areas, you can make big strides.",
     recommendation:
-      "We suggest scheduling a One-on-One Coaching Session to strengthen your momentum and gain a clear action plan.",
+      "Join us for a Monthly Webinar\n\nJoin us this month to strengthen your momentum and gain a clear action plan.",
     closing: financialQuickAssessmentClosing,
     primaryCta: {
-      label: "Book a Private Coaching Orientation",
-      href: "https://calendly.com/mr_efc/coaching_orientation",
+      label: "Coaching",
+      href: "https://empoweringfinancialcoaching.com/coaching/",
     },
     secondaryCta: {
-      label: "Schedule a Learn More Session",
+      label: "Schedule Session to Learn More",
       href: "https://calendly.com/mr_efc/learn-more",
     },
     nextStepLinks: [
       {
-        label: "Book Coaching",
-        href: "https://calendly.com/mr_efc/coaching_orientation",
-        description: "Get a focused plan for the habits that need the most attention.",
-      },
-      {
-        label: "Register for the Webinar",
-        href: "https://empoweringfinancialcoaching.com/workshops/",
-        description: "Build momentum with practical monthly guidance and support.",
-      },
-      {
-        label: "Explore Services",
+        label: "Coaching",
         href: "https://empoweringfinancialcoaching.com/coaching/",
-        description: "See which coaching path fits your current season best.",
+        description: "Explore one-on-one and group coaching options.",
+      },
+      {
+        label: "Summit",
+        href: "https://empoweringfinancialcoaching.com/summit/",
+        description: "Join our annual summit for deep-dive learning and community.",
+      },
+      {
+        label: "Workshops",
+        href: "https://empoweringfinancialcoaching.com/workshops/",
+        description: "Participate in practical workshops for hands-on guidance.",
+      },
+      {
+        label: "Contact",
+        href: "https://empoweringfinancialcoaching.com/contact/",
+        description: "Reach out with questions or to get personalized support.",
+      },
+      {
+        label: "Schedule Session to Learn More",
+        href: "https://calendly.com/mr_efc/learn-more",
+        description: "Book a FREE 30-minute session to discuss your goals and next steps.",
       },
     ],
   },
@@ -158,28 +178,38 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
       "That’s exactly what we’re here for. Our 6-Month Coaching Program was built for this — step-by-step support, no shame, just strategy.",
     closing: financialQuickAssessmentClosing,
     primaryCta: {
-      label: "Start the 6-Month Program",
-      href: "https://calendly.com/mr_efc/coaching_orientation",
+      label: "Coaching",
+      href: "https://empoweringfinancialcoaching.com/coaching/",
     },
     secondaryCta: {
-      label: "Contact Us",
+      label: "Contact",
       href: "https://empoweringfinancialcoaching.com/contact/",
     },
     nextStepLinks: [
       {
-        label: "Apply for the 6-Month Program",
-        href: "https://calendly.com/mr_efc/coaching_orientation",
-        description: "Get step-by-step support to reset your financial foundation.",
+        label: "Coaching",
+        href: "https://empoweringfinancialcoaching.com/coaching/",
+        description: "Explore one-on-one and group coaching options.",
       },
       {
-        label: "Schedule a Meeting",
-        href: "https://calendly.com/mr_efc/learn-more",
-        description: "Talk through your situation and find the best next step with support.",
+        label: "Summit",
+        href: "https://empoweringfinancialcoaching.com/summit/",
+        description: "Join our annual summit for deep-dive learning and community.",
       },
       {
-        label: "Register for the Webinar",
+        label: "Workshops",
         href: "https://empoweringfinancialcoaching.com/workshops/",
-        description: "Start with a practical, lower-pressure entry point for guidance.",
+        description: "Participate in practical workshops for hands-on guidance.",
+      },
+      {
+        label: "Contact",
+        href: "https://empoweringfinancialcoaching.com/contact/",
+        description: "Reach out with questions or to get personalized support.",
+      },
+      {
+        label: "Schedule Session to Learn More",
+        href: "https://calendly.com/mr_efc/learn-more",
+        description: "Book a session to discuss your goals and next steps.",
       },
     ],
   },
