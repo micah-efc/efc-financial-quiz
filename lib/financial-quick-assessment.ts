@@ -84,26 +84,31 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
       "If you’re preparing for a life transition or want to fine-tune your plan, we recommend a quick check-in coaching session to stay ahead. Click learn more to schedule a get to know you session.\n\nWant to help someone else grow too? Forward this quiz or invite a friend to take it!",
     closing: financialQuickAssessmentClosing,
     primaryCta: {
-      label: "Monthly Webinar",
-      href: "https://empoweringfinancialcoaching.com/workshops/",
-    },
-    secondaryCta: {
       label: "Schedule Session to Learn More",
       href: "https://calendly.com/mr_efc/learn-more",
     },
+    secondaryCta: {
+      label: "Join us at the Summit",
+      href: "https://empoweringfinancialcoaching.com/summit/",
+    },
     nextStepLinks: [
+      {
+        label: "Schedule Session to Learn More",
+        href: "https://calendly.com/mr_efc/learn-more",
+        description: "Book a FREE 30-minute session to discuss your goals and next steps.",
+      },
+      {
+        label: "Join us at the Summit",
+        href: "https://empoweringfinancialcoaching.com/summit/",
+        description: "Join our annual summit for deep-dive learning and community.",
+      },
       {
         label: "Coaching",
         href: "https://empoweringfinancialcoaching.com/coaching/",
         description: "Explore one-on-one and group coaching options.",
       },
       {
-        label: "Summit",
-        href: "https://empoweringfinancialcoaching.com/summit/",
-        description: "Join our annual summit for deep-dive learning and community.",
-      },
-      {
-        label: "Webinars",
+        label: "Monthly Webinar",
         href: "https://empoweringfinancialcoaching.com/workshops/",
         description: "Participate in our monthly webinars for hands-on guidance and support.",
       },
@@ -111,11 +116,6 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
         label: "Contact",
         href: "https://empoweringfinancialcoaching.com/contact/",
         description: "Reach out with questions or to get personalized support.",
-      },
-      {
-        label: "Schedule Session to Learn More",
-        href: "https://calendly.com/mr_efc/learn-more",
-        description: "Book a FREE 30-minute session to discuss your goals and next steps.",
       },
     ],
   },
@@ -131,8 +131,8 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
       "Join us for a Monthly Webinar\n\nJoin us this month to strengthen your momentum and gain a clear action plan.",
     closing: financialQuickAssessmentClosing,
     primaryCta: {
-      label: "Coaching",
-      href: "https://empoweringfinancialcoaching.com/coaching/",
+      label: "Monthly Webinar",
+      href: "https://empoweringfinancialcoaching.com/workshops/",
     },
     secondaryCta: {
       label: "Schedule Session to Learn More",
