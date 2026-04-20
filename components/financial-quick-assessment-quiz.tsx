@@ -249,9 +249,9 @@ export function FinancialQuickAssessmentQuiz() {
           </section>
 
           <section className="px-6 pb-6 sm:px-10 sm:pb-10">
-            <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
               <article
-                className="rounded-[2rem] border p-6 sm:p-8"
+                className="rounded-[2rem] border p-6 sm:p-8 w-full"
                 style={{
                   backgroundColor: "#fffaf7",
                   borderColor: efcBrand.colors.border,
@@ -360,28 +360,32 @@ export function FinancialQuickAssessmentQuiz() {
                 ) : null}
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-between">
-                  <button
-                    type="button"
-                    onClick={handleBack}
-                    disabled={!canGoBack || isSubmitting}
-                    className="inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
-                    style={{
-                      borderColor: efcBrand.colors.border,
-                      color: efcBrand.colors.ink,
-                      backgroundColor: efcBrand.colors.surface,
-                    }}
+                              <button
+                                type="button"
+                                onClick={handleBack}
+                                disabled={!canGoBack || isSubmitting}
+                                className="inline-flex items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold transition disabled:cursor-not-allowed"
+                                style={{
+                                  borderColor: "#ff7755",
+                                  color: "#fff",
+                                  backgroundColor: "#ff7755",
+                                  opacity: 1,
+                                }}
                   >
                     Back
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    disabled={!canGoNext || !email.trim() || !consent || isSubmitting}
-                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
-                    style={{
-                      backgroundColor: efcBrand.colors.teal,
-                    }}
+                              <button
+                                type="button"
+                                onClick={handleNext}
+                                disabled={!canGoNext || !email.trim() || !consent || isSubmitting}
+                                className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white border transition disabled:cursor-not-allowed"
+                                style={{
+                                  backgroundColor: "#ff7755",
+                                  borderColor: "#ff7755",
+                                  color: "#fff",
+                                  opacity: 1,
+                                }}
                   >
                     {isSubmitting
                       ? "Submitting..."
@@ -391,76 +395,6 @@ export function FinancialQuickAssessmentQuiz() {
                   </button>
                 </div>
               </article>
-
-              <aside className="space-y-6">
-                <div
-                  className="rounded-[2rem] border p-6"
-                  style={{
-                    backgroundColor: "#f4fbf7",
-                    borderColor: "#d7eadf",
-                  }}
-                >
-                  <p
-                    className="text-sm uppercase tracking-[0.25em]"
-                    style={{ color: efcBrand.colors.moneyGreen }}
-                  >
-                    What to expect
-                  </p>
-
-                  <h3
-                    className="mt-3 text-2xl"
-                    style={{
-                      fontFamily: efcBrand.fontStacks.displayLight,
-                      fontWeight: 400,
-                    }}
-                  >
-                    Simple, supportive, practical
-                  </h3>
-
-                  <div
-                    className="mt-4 space-y-3 text-base leading-8"
-                    style={{ color: efcBrand.colors.mutedInk }}
-                  >
-                    <p>Answer 10 quick questions.</p>
-                    <p>See your results right away.</p>
-                    <p>Get a clear next-step recommendation based on your score.</p>
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-[2rem] border p-6"
-                  style={{
-                    backgroundColor: "#fffaf7",
-                    borderColor: efcBrand.colors.border,
-                  }}
-                >
-                  <p
-                    className="text-sm uppercase tracking-[0.25em]"
-                    style={{ color: efcBrand.colors.gold }}
-                  >
-                    Reminder
-                  </p>
-
-                  <div
-                    className="mt-4 space-y-4 text-base leading-8"
-                    style={{ color: efcBrand.colors.mutedInk }}
-                  >
-                    <p>This is a check-in, not a judgment.</p>
-                    <p>Your answers simply help identify your next best step.</p>
-                  </div>
-
-                  <p
-                    className="mt-6 text-3xl"
-                    style={{
-                      fontFamily: efcBrand.fontStacks.script,
-                      color: efcBrand.colors.teal,
-                      lineHeight: 1,
-                    }}
-                  >
-                    Progress over perfection.
-                  </p>
-                </div>
-              </aside>
             </div>
           </section>
         </div>
