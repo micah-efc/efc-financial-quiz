@@ -140,6 +140,16 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
     },
     nextStepLinks: [
       {
+        label: "Monthly Webinar",
+        href: "https://empoweringfinancialcoaching.com/workshops/",
+        description: "Participate in our monthly webinars for hands-on guidance and support.",
+      },
+      {
+        label: "Schedule Session to Learn More",
+        href: "https://calendly.com/mr_efc/learn-more",
+        description: "Book a FREE 30-minute session to discuss your goals and next steps.",
+      },
+      {
         label: "Coaching",
         href: "https://empoweringfinancialcoaching.com/coaching/",
         description: "Explore one-on-one and group coaching options.",
@@ -150,19 +160,9 @@ export const financialQuickAssessmentRanges: ResultRange[] = [
         description: "Join our annual summit for deep-dive learning and community.",
       },
       {
-        label: "Workshops",
-        href: "https://empoweringfinancialcoaching.com/workshops/",
-        description: "Participate in practical workshops for hands-on guidance.",
-      },
-      {
         label: "Contact",
         href: "https://empoweringfinancialcoaching.com/contact/",
         description: "Reach out with questions or to get personalized support.",
-      },
-      {
-        label: "Schedule Session to Learn More",
-        href: "https://calendly.com/mr_efc/learn-more",
-        description: "Book a FREE 30-minute session to discuss your goals and next steps.",
       },
     ],
   },
